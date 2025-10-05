@@ -25,7 +25,3 @@
 /nbdist/
 /.nb-gradle/
 /build/
-
-### Application Credentials ###
-src/main/resources/application-test.yaml
-src/main/resources/application.yaml
