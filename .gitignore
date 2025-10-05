@@ -27,5 +27,5 @@
 /build/
 
 ### Application Credentials ###
-application.yaml
-application-test.yaml
+/src/main/resources/application-test.yaml
+/src/main/resources/application.yaml
