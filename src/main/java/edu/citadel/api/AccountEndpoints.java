@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 @RestController
 @RequestMapping("/account")
@@ -62,5 +63,15 @@ public class AccountEndpoints {
       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
   }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable Long id) {
+        if (accountRepository.existsById(id)) {
+            accountRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404
+        }
+    }
 
 }
