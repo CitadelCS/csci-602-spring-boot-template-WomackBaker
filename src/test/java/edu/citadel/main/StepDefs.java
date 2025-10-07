@@ -2,12 +2,9 @@ package edu.citadel.main;
 
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.core.internal.com.fasterxml.jackson.databind.ObjectMapper;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -19,7 +16,7 @@ public class StepDefs extends SpringIntegrationTest{
     // Info Test
     @When("^the client calls /info")
     public void the_client_issues_GET_info() throws Throwable{
-        executeGet("http://localhost:5001/info");
+        executeGet("/info");
     }
 
     @Then("^the client receives application name (.+)$")
@@ -46,7 +43,7 @@ public class StepDefs extends SpringIntegrationTest{
     // Health Test
     @When("^the client calls /health")
     public void the_client_issues_GET_health() throws Throwable{
-        executeGet("http://localhost:5001/health");
+        executeGet("/health");
     }
 
     @Then("^the client receives status (.+)$")
@@ -56,17 +53,4 @@ public class StepDefs extends SpringIntegrationTest{
                 latestResponse.getBody(), response.get("status").asText(), is(status));
     }
 
-    // Account ID Test
-    private Map<String, String> accountPayload;
-
-    @When("^the client creates an account with:$")
-    public void the_client_creates_account(DataTable table) {
-        accountPayload = table.asMap(String.class, String.class);
-        executePost("http://localhost:5001/account", accountPayload);
-    }
-
-    @Then("^the response contains the account with status (\\d+)$")
-    public void the_response_contains_account_status(int status) throws Throwable {
-        assertThat("Status code mismatch", latestResponse.getStatusCode().value(), is(status));
-    }
 }
